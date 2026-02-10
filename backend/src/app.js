@@ -14,6 +14,8 @@ export function createApp() {
   const app = express();
 
   app.disable("x-powered-by");
+  // Vercel sits behind a proxy and forwards client IP headers.
+  app.set("trust proxy", 1);
 
   app.use(helmet());
   app.use(
@@ -37,6 +39,10 @@ export function createApp() {
 
   app.get("/health", (_req, res) => {
     res.json({ ok: true });
+  });
+
+  app.get("/", (_req, res) => {
+    res.json({ ok: true, service: "backend", message: "PrimeTrade API is running" });
   });
 
   app.use("/api/auth", authRouter);
