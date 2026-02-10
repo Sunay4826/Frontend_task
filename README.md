@@ -33,6 +33,14 @@ This repository contains a complete solution for the **Frontend Developer Intern
 
 ![Create Task UI](./assets/create-task.png)
 
+## Sign In Screenshot
+
+![Sign In UI](./assets/signin.png)
+
+## Sign Up Screenshot
+
+![Sign Up UI](./assets/signup.png)
+
 ## Getting started
 
 ### 1) Prerequisites
