@@ -17,10 +17,20 @@ export function createApp() {
   // Vercel sits behind a proxy and forwards client IP headers.
   app.set("trust proxy", 1);
 
+  const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:5173")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
   app.use(helmet());
   app.use(
     cors({
-      origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
+      origin(origin, callback) {
+        // Allow server-to-server requests and non-browser clients.
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) return callback(null, true);
+        return callback(new Error("CORS origin not allowed"));
+      },
       credentials: true,
     }),
   );
